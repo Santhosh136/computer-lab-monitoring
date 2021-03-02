@@ -13,7 +13,7 @@ import lombok.ToString;
 public class Submission {
     @Id
     private int submissionId;
-    private Student student;
-    private Experiment experiment;
+    // private Student student;
+    // private Experiment experiment;
     private int marks;    
 }
