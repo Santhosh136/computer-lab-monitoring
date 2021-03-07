@@ -5,13 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import gct.it.computerlabmonitoring.entities.Experiment;
 import gct.it.computerlabmonitoring.services.ExperimentService;
 
 @Controller
-@RequestMapping("/experiments")
 public class ExperimentController {
     @Autowired
     private ExperimentService expService;
