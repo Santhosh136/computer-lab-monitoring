@@ -1,10 +1,11 @@
 package gct.it.computerlabmonitoring.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import java.util.List;
+import javax.persistence.OneToOne;
 
 @Entity 
 public class Student {
@@ -16,6 +17,9 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     private List<Submission> submissions;
+
+    @OneToOne(mappedBy = "student")
+    private User user;
 
     public Student() {}
 
@@ -52,6 +56,12 @@ public class Student {
     }
     public void setSubmissions(List<Submission> submissions) {
         this.submissions = submissions;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

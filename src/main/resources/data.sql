@@ -1,5 +1,6 @@
 insert into student(reg_no, name, department, email_id) values
-("36", "santhosh", "IT", "snthosh"),
-("39", "sibi", "IT", "sibi888"),
-("37", "saravana priya", "IT", "saravana"),
-("38", "shakthi", "IT", "shakthisk");
+("136", "santhosh", "IT", "snthosh"),
+("139", "sibi", "IT", "sibi888"),
+("137", "saravana priya", "IT", "saravana"),
+("138", "shakthi", "IT", "shakthisk");
+
