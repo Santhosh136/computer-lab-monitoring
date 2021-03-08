@@ -9,11 +9,11 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class ExpDocument {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String fileName;
     private Long size;
+    
     @Column(columnDefinition = "mediumblob")
     private byte[] content;
     

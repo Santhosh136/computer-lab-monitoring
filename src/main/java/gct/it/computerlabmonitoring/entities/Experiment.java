@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 public class Experiment {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer expId;
+    private Integer id;
     private String expNo;
     private String title;
     private String description;
@@ -23,11 +23,11 @@ public class Experiment {
 
     public Experiment() {}
 
-    public Integer getExpId() {
-        return expId;
+    public Integer getId() {
+        return id;
     }
-    public void setExpId(Integer expId) {
-        this.expId = expId;
+    public void setId(Integer id) {
+        this.id = id;
     }
     public String getExpNo() {
         return expNo;
@@ -47,11 +47,9 @@ public class Experiment {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public List<Submission> getSubmissions() {
         return submissions;
     }
-
     public void setSubmissions(List<Submission> submissions) {
         this.submissions = submissions;
     }

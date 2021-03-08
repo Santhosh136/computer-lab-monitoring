@@ -19,6 +19,10 @@ public class Student {
 
     public Student() {}
 
+    public Student(String regNo) {
+        this.regNo = regNo;
+    }
+
     public String getRegNo() {
         return regNo;
     }
