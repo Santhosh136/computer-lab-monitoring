@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ExpDocument {
@@ -15,6 +16,9 @@ public class ExpDocument {
     private Long size;
     @Column(columnDefinition = "mediumblob")
     private byte[] content;
+    
+    @OneToOne(mappedBy = "doc")
+    private Submission submission;
 
     public ExpDocument() {}
 
@@ -48,5 +52,12 @@ public class ExpDocument {
 
     public void setContent(byte[] bs) {
         this.content = bs;
-    }   
+    }  
+    
+    public Submission getSubmission() {
+        return submission;
+    }
+    public void setSubmission(Submission submission) {
+        this.submission = submission;
+    }
 }

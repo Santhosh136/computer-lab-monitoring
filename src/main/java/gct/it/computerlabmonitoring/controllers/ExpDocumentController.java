@@ -1,20 +1,16 @@
 package gct.it.computerlabmonitoring.controllers;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Optional;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Section;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +23,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gct.it.computerlabmonitoring.entities.ExpDocument;
+import gct.it.computerlabmonitoring.entities.Submission;
 import gct.it.computerlabmonitoring.repositories.ExpDocumentRepo;
+import gct.it.computerlabmonitoring.repositories.ExperimentRepo;
+import gct.it.computerlabmonitoring.repositories.StudentRepository;
+import gct.it.computerlabmonitoring.repositories.SubmissionRepo;
 
 
-@Controller @RequestMapping("/experiments")
+@Controller @RequestMapping("/submissions")
 public class ExpDocumentController {
     @Autowired
     private ExpDocumentRepo docRepo;
 
+    @Autowired
+    private ExperimentRepo expRepo;
+
+    @Autowired
+    private StudentRepository studentRepo;
+
+    @Autowired
+    private SubmissionRepo submissionRepo;
+
     @GetMapping
     public String allExps(Model model) {
         model.addAttribute("docs", docRepo.findAll());
-        return "exp-list";
+        return "sub-list";
+    }
+
+    @GetMapping("/new")
+    public String newSubmission(@Param("id") Integer id, Model model) {
+        Submission submission = new Submission();
+        submission.setExp(expRepo.findById(id).get());
+        submission.setStudent(studentRepo.findById("36").get());
+
+        submissionRepo.save(submission);
+
+        model.addAttribute("subId", submission.getSubmissionId());
+        return "sub-new";
     }
 
     @GetMapping("/download")
@@ -56,11 +77,12 @@ public class ExpDocumentController {
     }
 
     @PostMapping("/save")
-    public String saveExp(@RequestParam("code") String code, @RequestParam("op") String output) throws
-    DocumentException, IOException {
+    public String saveExp(@RequestParam("code") String code, 
+    @RequestParam("op") String output,
+    @RequestParam("language") String language, 
+    @RequestParam("subId") Integer subId) throws
+    Exception {
         // setting up fontStyles
-        Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
-        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA ,15 );
         Font codeFont = FontFactory.getFont(FontFactory.COURIER, 12);
 
         // creating new pdf document 
@@ -71,12 +93,10 @@ public class ExpDocumentController {
         // opening document and adding content
         doc.open();
 
-        Chapter chapter1 = new Chapter(new Paragraph("Submission Report\n", chapterFont), 1);
-        Section section1 = chapter1.addSection(new Paragraph("Source code\n", titleFont));
-        section1.add(new Paragraph(code, codeFont));
-        Section section2 = chapter1.addSection(new Paragraph("Output\n", titleFont));
-        section2.add(new Paragraph(output, codeFont));
-        doc.add(chapter1);
+        doc.add(new Paragraph("Source code", FontFactory.getFont(FontFactory.COURIER_BOLD, 15)));
+        doc.add(new Paragraph(code, codeFont));
+        doc.add(new Paragraph("Ouput", FontFactory.getFont(FontFactory.COURIER_BOLD, 15)));
+        doc.add(new Paragraph(output, codeFont));
 
         // closing resources
         doc.close();
@@ -91,8 +111,18 @@ public class ExpDocumentController {
         docRepo.save(expDoc);
         baos.close();
 
+        // saving reference to submission
+
+        Optional<Submission> result = submissionRepo.findById(subId);
+
+        if(!result.isPresent()) throw new Exception("No submission");
+        Submission submission  = result.get();
+
+        submission.setDoc(expDoc);
+        submissionRepo.save(submission);
+
         // redirecting to home
-        return "redirect:/";
+        return "redirect:/submissions";
     }
     
 }

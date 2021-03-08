@@ -1,14 +1,17 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doc manager</title>
+    <title>Experiments</title>
 </head>
 <body>
-    <p th:each="doc : ${docs}">
-        <a th:href="@{'/experiments/download?id=' + ${doc.id}}" target="_tab">[[${doc.fileName}]]</a>
-        <span>([[${doc.size}]] bytes)</span>
+    <p th:each="exp : ${exps}">
+        <span>[[${exp.expNo}]]</span>
+        <span>[[${exp.title}]]</span>
+        <span>[[${exp.description}]]</span>
+        <a th:href="@{'/submissions/new?id=' + ${exp.expId}}">Click</a>
     </p>
 </body>
 </html>

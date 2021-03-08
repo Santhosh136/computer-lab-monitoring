@@ -4,86 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Editor</title>
-    <!-- css -->
-    <link rel="stylesheet" href="codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="codemirror/theme/monokai.css">
-    <link rel="stylesheet" href="codemirror/theme/eclipse.css">
-    <link rel="stylesheet" href="codemirror/theme/ayu-mirage.css">
-    <!-- js -->
-    <script src="codemirror/lib/codemirror.js"></script>
-    <script src="codemirror/mode/clike.js"></script>
-    <script src="codemirror/mode/python.js"></script>
-    <script src="codemirror/addon/matchbrackets.js"></script>
-    <script src="codemirror/addon/closebrackets.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Document</title>
 </head>
 <body>
-    <form action="/experiments/save" method="POST">
-        <label for="language">language:</label>
-        <select name="language" id="language" onchange="selectLang()">
-            <option value="c">C</option>
-            <option value="cpp">CPP</option>
-            <option value="java">Java</option>
-            <option value="py">Python</option>
-        </select>
-        <label for="theme">theme:</label>
-        <select name="theme" id="theme" onchange="selectTheme()">
-            <option value="default">default</option>
-            <option value="eclipse">eclipse</option>
-            <option value="ayu-mirage">ayu-dark</option>
-            <option value="monokai">monokai</option>
-        </select>
-        <textarea id="editor" name="code"></textarea>
-        <label for="output">Input</label><br>
-        <textarea id="input" name="ip" cols="30" rows="10"></textarea><br>
-        <button type="button" onclick="runCode()">Run</button>
-        <hr>
-        <label for="output">Output</label><br>
-        <textarea id="output" name="op" cols="30" rows="10"></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
+    <h1>Virtual Programming Laboratory</h1>
 </body>
-<script>
-    let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-        mode: "text/x-csrc",
-        theme: "default",
-        lineNumbers: true,
-        matchBrackets: true,
-        autoCloseBrackets: true,
-        pasteLinesPerSelection: false,
-    });
-    let langs = {
-        c : "text/x-csrc",
-        cpp : "text/x-c++src",
-        java : "text/x-java",
-        py : "text/x-python"
-    };
-    function selectLang() {
-        let selectedLang = $("#language").val();
-        editor.setOption("mode", langs[selectedLang]);
-    }
-    function selectTheme() {
-        let selectedTheme = $("#theme").val();
-        editor.setOption("theme", selectedTheme);
-    }
-    const runCode = () => {
-        let code = editor.getValue();
-        let ip = $("#input").val();
-        $.ajax({
-            url: "/api/run",
-            method: "GET",
-            data: {
-                language: $("#language").val(),
-                input: `${ip}`,
-                code: `${code}`
-            },
-            success: function(res) {
-                let json = JSON.parse(res);
-                $("#output").text(json.output);
-            }
-        })
-    }
-</script>
 </html>

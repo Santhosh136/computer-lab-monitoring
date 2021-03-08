@@ -2,6 +2,9 @@ package gct.it.computerlabmonitoring.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity 
 public class Student {
@@ -10,6 +13,9 @@ public class Student {
     private String name;
     private String department;
     private String emailId;
+
+    @OneToMany(mappedBy = "student")
+    private List<Submission> submissions;
 
     public Student() {}
 
@@ -37,4 +43,11 @@ public class Student {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+    public void setSubmissions(List<Submission> submissions) {
+        this.submissions = submissions;
+    }
+
 }
