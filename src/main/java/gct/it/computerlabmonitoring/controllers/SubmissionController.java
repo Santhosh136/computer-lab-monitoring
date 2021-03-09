@@ -55,7 +55,8 @@ public class SubmissionController {
     public String newSubmission(@Param("id") Integer id, Model model) {
         Submission submission = new Submission();
         submission.setExp(expRepo.findById(id).get());
-        submission.setStudent(studentRepo.findById("36").get());
+        // change the below code with principal 
+        submission.setStudent(studentRepo.findById("136").get());
 
         submissionRepo.save(submission);
 

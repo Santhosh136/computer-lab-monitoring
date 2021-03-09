@@ -10,6 +10,7 @@
     <p th:each="course : ${courses}">
         <span>[[${course.code}]]</span>
         <span>[[${course.name}]]</span>
+        <a th:href="@{'/experiments/new?id=' + ${course.code}}">Click</a>
     </p>
 </body>
 </html>

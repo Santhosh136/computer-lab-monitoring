@@ -31,6 +31,6 @@ public class CourseController {
     @PostMapping("/save")
     public String saveCourse(Course course) {
         courseRepo.save(course);
-        return "/courses";
+        return "redirect:/courses";
     }
 }
