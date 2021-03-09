@@ -1,5 +1,9 @@
 package gct.it.computerlabmonitoring.controllers;
+import java.security.Principal;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +22,8 @@ public class HomeController {
     @Autowired
     private StudentRepo studentRepo;
 
-    @GetMapping("/sign-up")
-    public String sayHello(Model model) {
+    @GetMapping("/signup")
+    public String createUser(Model model) {
         model.addAttribute("user", new User());
         return "sign-up";
     }
@@ -34,6 +38,17 @@ public class HomeController {
         user.setStudent(student);
         
         userRepo.save(user);
-        return "redirect:/sign-up";
+        return "redirect:/signup";
     }
+
+    @GetMapping("/profile") 
+    public String showUser(Principal principal, Model model) {
+        String regNo = principal.getName();
+        Optional<Student> result = studentRepo.findById(regNo);
+        if(!result.isPresent()) throw new UsernameNotFoundException("User not found");
+        model.addAttribute("student", result.get());
+        return "student-profile";
+    }
+
+    
 }

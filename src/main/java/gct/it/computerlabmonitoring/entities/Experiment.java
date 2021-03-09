@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class Experiment {
     private List<Submission> submissions;
     // test ip
     // due date
+    @ManyToOne
+    private Course course;
 
     public Experiment() {}
 
@@ -52,5 +55,13 @@ public class Experiment {
     }
     public void setSubmissions(List<Submission> submissions) {
         this.submissions = submissions;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
