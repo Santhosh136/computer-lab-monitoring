@@ -11,6 +11,7 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <label for="expNo">Course code:</label> <input type="text" th:field="*{code}">
         <label for="title">Course name:</label> <input type="text" th:field="*{name}">
+        <label for="title">Course Sem:</label> <input type="text" th:field="*{semester}">
         <input type="submit" value="Add">
     </form>
 </body>

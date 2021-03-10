@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import gct.it.computerlabmonitoring.entities.Student;
 import gct.it.computerlabmonitoring.entities.User;
+import gct.it.computerlabmonitoring.repositories.CourseRepo;
 import gct.it.computerlabmonitoring.repositories.StudentRepo;
 import gct.it.computerlabmonitoring.repositories.UserRepo;
 
@@ -18,6 +19,9 @@ import gct.it.computerlabmonitoring.repositories.UserRepo;
 public class HomeController {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private CourseRepo courseRepo;
 
     @Autowired
     private StudentRepo studentRepo;
@@ -50,5 +54,12 @@ public class HomeController {
         return "student-profile";
     }
 
-    
+    @GetMapping("/dashboard")    
+    public String showDashBoard(Principal principal, Model model) {
+        String regNo = principal.getName();
+        Optional<Student> result = studentRepo.findById(regNo);
+        if(!result.isPresent()) throw new UsernameNotFoundException("User not found");
+        model.addAttribute("courses", courseRepo.findBySemester(result.get().getSemester()));
+        return "student-dashboard";
+    }
 }

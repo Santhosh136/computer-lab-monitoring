@@ -22,6 +22,12 @@
                 <td><input th:field="${student.emailId}"></td>
             </tr>
             <tr>
+                <td>Semester :</td> 
+                <td>
+                    <input th:field="${student.semester}" th:value="${student.semester}">
+                </td>
+            </tr>
+            <tr>
                 <td><input type="submit" value="Update"> </td>
                 <td><button type="reset">Cancel</button></td>
             </tr>

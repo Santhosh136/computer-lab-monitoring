@@ -1,7 +1,5 @@
 package gct.it.computerlabmonitoring.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,16 +22,19 @@ public class ExperimentController {
     private CourseRepo courseRepo;
 
     @GetMapping
-    public String listExp(Model model) {
-        model.addAttribute("exps", expRepo.findAll());
+    public String listExp(@RequestParam(value = "id", required = false) String code, Model model) {
+        if(code != null) {
+            Course course = courseRepo.findById(code).get();
+            model.addAttribute("exps", expRepo.findByCourse(course));
+        }
+        else model.addAttribute("exps", expRepo.findAll());
         return "exp-list";
     }
 
     @GetMapping("/new")
-    public String newExp(@RequestParam("id") String courseCode,Model model) throws Exception {
+    public String newExp(@RequestParam(value = "id", required = false) String courseCode,Model model) throws Exception {
         model.addAttribute("courseCode", courseCode);
         model.addAttribute("exp", new Experiment());
-
         return "exp-new";
     }
 

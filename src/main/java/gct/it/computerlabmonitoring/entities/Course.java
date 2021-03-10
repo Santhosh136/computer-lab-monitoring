@@ -11,6 +11,7 @@ public class Course {
     @Id
     private String code;
     private String name;
+    private String semester;
 
     @OneToMany(mappedBy = "course")
     private List<Experiment> experiments;
@@ -37,4 +38,13 @@ public class Course {
     public void setExperiments(List<Experiment> experiments) {
         this.experiments = experiments;
     }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
 }
+

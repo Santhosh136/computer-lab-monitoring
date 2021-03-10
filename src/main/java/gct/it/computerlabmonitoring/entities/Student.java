@@ -14,6 +14,7 @@ public class Student {
     private String name;
     private String department;
     private String emailId;
+    private String semester;
 
     @OneToMany(mappedBy = "student")
     private List<Submission> submissions;
@@ -25,6 +26,7 @@ public class Student {
 
     public Student(String regNo) {
         this.regNo = regNo;
+        this.semester = "I";
     }
 
     public String getRegNo() {
@@ -63,5 +65,10 @@ public class Student {
     public void setUser(User user) {
         this.user = user;
     }
-
+    public String getSemester() {
+        return semester;
+    }
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
 }
