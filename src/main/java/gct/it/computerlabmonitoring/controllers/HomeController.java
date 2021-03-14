@@ -29,8 +29,11 @@ public class HomeController {
     @GetMapping("/signup")
     public String createUser(Model model) {
         model.addAttribute("user", new User());
-        return "sign-up";
+        return "signup";
     }
+
+    @GetMapping("/login")
+    public String loginUser() { return "login"; }
 
     @PostMapping("/save")
     public String saveUser(User user) {

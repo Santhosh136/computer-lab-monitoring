@@ -1,0 +1,62 @@
+course
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| code     | varchar(255) | NO   | PRI | NULL    |       |
+| name     | varchar(255) | YES  |     | NULL    |       |
+| semester | varchar(255) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+
+exp_document
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| id        | int(11)      | NO   | PRI | NULL    |       |
+| content   | mediumblob   | YES  |     | NULL    |       |
+| file_name | varchar(255) | YES  |     | NULL    |       |
+| size      | bigint(20)   | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+
+experiment
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int(11)      | NO   | PRI | NULL    |       |
+| description | varchar(255) | YES  |     | NULL    |       |
+| exp_no      | varchar(255) | YES  |     | NULL    |       |
+| title       | varchar(255) | YES  |     | NULL    |       |
+| course_code | varchar(255) | YES  | MUL | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+
+student
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| reg_no     | varchar(255) | NO   | PRI | NULL    |       |
+| department | varchar(255) | YES  |     | NULL    |       |
+| email_id   | varchar(255) | YES  |     | NULL    |       |
+| name       | varchar(255) | YES  |     | NULL    |       |
+| semester   | varchar(255) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+submission
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| submission_id  | int(11)      | NO   | PRI | NULL    |       |
+| marks          | int(11)      | NO   |     | NULL    |       |
+| doc_id         | int(11)      | YES  | MUL | NULL    |       |
+| exp_id         | int(11)      | YES  | MUL | NULL    |       |
+| student_reg_no | varchar(255) | YES  | MUL | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+
+user
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| user_name      | varchar(255) | NO   | PRI | NULL    |       |
+| active         | bit(1)       | NO   |     | NULL    |       |
+| password       | varchar(255) | YES  |     | NULL    |       |
+| roles          | varchar(255) | YES  |     | NULL    |       |
+| student_reg_no | varchar(255) | YES  | MUL | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
