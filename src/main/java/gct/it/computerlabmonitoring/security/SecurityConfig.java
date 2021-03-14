@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -22,15 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        
-        // auth.inMemoryAuthentication()
-        //     .withUser("136")
-        //     .password("{noop}user123")
-        //     .authorities("ROLE_USER")
-        // .and()
-        //     .withUser("1001")
-        //     .password("{noop}admin123")
-        //     .authorities("ROLE_ADMIN");
         auth.userDetailsService(userDetailsService);
     }
 
@@ -40,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        .antMatchers("/admin/**").hasAnyRole("ADMIN")
-        .antMatchers("/students/**").hasAnyRole("USER", "ADMIN")
+        .antMatchers("/courses/**", "/experiments/new", "/experiments/save").hasRole("ADMIN")
+        .antMatchers("/students/save", "/submissions/**").hasRole("USER")
         .anyRequest().permitAll()
         .and()
         .formLogin()
