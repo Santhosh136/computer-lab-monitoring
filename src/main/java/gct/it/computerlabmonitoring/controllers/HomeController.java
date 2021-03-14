@@ -51,7 +51,7 @@ public class HomeController {
         Optional<Student> result = studentRepo.findById(regNo);
         if(!result.isPresent()) throw new UsernameNotFoundException("User not found");
         model.addAttribute("student", result.get());
-        return "student-profile";
+        return "student/student-profile";
     }
 
     @GetMapping("/dashboard")    
@@ -60,6 +60,6 @@ public class HomeController {
         Optional<Student> result = studentRepo.findById(regNo);
         if(!result.isPresent()) throw new UsernameNotFoundException("User not found");
         model.addAttribute("courses", courseRepo.findBySemester(result.get().getSemester()));
-        return "student-dashboard";
+        return "student/student-dashboard";
     }
 }

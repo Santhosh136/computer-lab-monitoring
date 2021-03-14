@@ -28,14 +28,14 @@ public class ExperimentController {
             model.addAttribute("exps", expRepo.findByCourse(course));
         }
         else model.addAttribute("exps", expRepo.findAll());
-        return "exp-list";
+        return "exp/exp-list";
     }
 
     @GetMapping("/new")
     public String newExp(@RequestParam(value = "id", required = false) String courseCode,Model model) throws Exception {
         model.addAttribute("courseCode", courseCode);
         model.addAttribute("exp", new Experiment());
-        return "exp-new";
+        return "exp/exp-new";
     }
 
     @PostMapping("/save")

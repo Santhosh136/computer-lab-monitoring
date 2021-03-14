@@ -1,17 +1,22 @@
 package gct.it.computerlabmonitoring.controllers;
 
 import java.io.ByteArrayOutputStream;
+import java.security.Principal;
 import java.util.Optional;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -44,25 +49,23 @@ public class SubmissionController {
     @Autowired
     private SubmissionRepo submissionRepo;
 
-    // 
     @GetMapping
     public String allExps(Model model) {
         model.addAttribute("docs", docRepo.findAll());
-        return "submission-list";
+        return "submission/submission-list";
     }
 
     @GetMapping("/new")
-    public String newSubmission(@Param("id") Integer id, Model model) {
+    public String newSubmission(@Param("id") Integer id, Principal principal, Model model) {
         Submission submission = new Submission();
         submission.setExp(expRepo.findById(id).get());
-        // change the below code with principal 
-        submission.setStudent(studentRepo.findById("136").get());
+        submission.setStudent(studentRepo.findById(principal.getName()).get());
 
         submissionRepo.save(submission);
 
         model.addAttribute("subId", submission.getSubmissionId());
         model.addAttribute("expId", id);
-        return "submission-new";
+        return "submission/submission-new";
     }
 
     @GetMapping("/download")
@@ -80,6 +83,14 @@ public class SubmissionController {
         outputStream.close();
     }
 
+    private void addParagraph(Document doc, String name, String val, Font boldFont, Font normalFont) {
+        Paragraph p = new Paragraph();
+        p.add(new Chunk(name, boldFont));
+        p.add(new Chunk(val, normalFont));
+        try { doc.add(p); } 
+        catch (DocumentException e) { e.printStackTrace(); }
+    }
+
     @PostMapping("/save")
     public String saveExp(
         @RequestParam("code") String code, 
@@ -89,7 +100,24 @@ public class SubmissionController {
         @RequestParam("expId") Integer expId) throws Exception {
         // setting up fontStyles
         Font codeFont = FontFactory.getFont(FontFactory.COURIER, 12);
+        Font boldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+        Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
 
+        // Getting submission
+        Optional<Submission> result = submissionRepo.findById(subId);
+
+        if(!result.isPresent()) throw new Exception("No submission");
+        Submission submission  = result.get();
+
+        String courseCode = submission.getExp().getCourse().getCode();
+        String courseName = submission.getExp().getCourse().getName();
+
+        String studentName = submission.getStudent().getName();
+        String studentRegno = submission.getStudent().getRegNo();
+        String expNo = submission.getExp().getExpNo();
+        String expTitle = submission.getExp().getTitle();
+        String expDesc = submission.getExp().getDescription();
+        
         // creating new pdf document 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document doc = new Document(PageSize.A4, 20, 20, 20, 20);
@@ -98,8 +126,28 @@ public class SubmissionController {
         // opening document and adding content
         doc.open();
 
+        Paragraph p = new Paragraph();
+        p.add(new Chunk(courseCode+" - ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 15)));
+        p.add(new Chunk(courseName, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 15)));
+        p.setAlignment(Element.ALIGN_CENTER);
+        doc.add(p);
+        doc.add( Chunk.NEWLINE);
+
+        addParagraph(doc, "Student Regno:", studentRegno, boldFont, normalFont);
+        addParagraph(doc, "Student Name:", studentName, boldFont, normalFont);
+        addParagraph(doc, "Exp No:", expNo, boldFont, normalFont);
+        addParagraph(doc, "Exp Title:", expTitle, boldFont, normalFont);
+        addParagraph(doc, "Exp Description:", expDesc, boldFont, normalFont);
+        
+        doc.add( Chunk.NEWLINE);
+        doc.add(new Chunk(new DottedLineSeparator()));
+
         doc.add(new Paragraph("Source code", FontFactory.getFont(FontFactory.COURIER_BOLD, 15)));
         doc.add(new Paragraph(code, codeFont));
+
+        doc.add( Chunk.NEWLINE);
+        doc.add( Chunk.NEWLINE);
+
         doc.add(new Paragraph("Ouput", FontFactory.getFont(FontFactory.COURIER_BOLD, 15)));
         doc.add(new Paragraph(output, codeFont));
 
@@ -107,16 +155,9 @@ public class SubmissionController {
         doc.close();
         pd.close();
 
-        // Getting submission
-        Optional<Submission> result = submissionRepo.findById(subId);
-
-        if(!result.isPresent()) throw new Exception("No submission");
-        Submission submission  = result.get();
-        
         ExpDocument expDoc = new ExpDocument();
-
-        String regNo = "136";
-        expDoc.setFileName("Student"+regNo+"Exp"+expId);
+    
+        expDoc.setFileName("Student"+studentRegno+"Exp"+expNo);
         expDoc.setContent(baos.toByteArray());
         expDoc.setSize(Integer.toUnsignedLong(baos.size()));
 

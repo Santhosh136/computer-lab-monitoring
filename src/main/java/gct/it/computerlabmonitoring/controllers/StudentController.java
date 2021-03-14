@@ -21,26 +21,13 @@ public class StudentController {
     @GetMapping
     public String findAll(Model model) {
         model.addAttribute("students", studentRepo.findAll());
-        return "student-list";
+        return "student/student-list";
     }
-
-    // @GetMapping("/new")
-    // public String newForm(Model model) {
-    //     model.addAttribute("student", new Student());
-    //     return "student-new";
-    // }
 
     @PostMapping("/save")
     public String save(Principal principal, Student student) {
         student.setRegNo(principal.getName());
         studentRepo.save(student);
-        return "redirect:/students/profile";
-    }
-
-    @GetMapping("/profile")
-    public String showProfile(Principal principal, Model model) {
-        Student student = studentRepo.findById(principal.getName()).get();
-        model.addAttribute("student", student);
-        return "student-profile";
+        return "redirect:/profile";
     }
 }

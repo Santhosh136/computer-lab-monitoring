@@ -19,13 +19,13 @@ public class CourseController {
     @GetMapping
     public String allCourses(Model model) {
         model.addAttribute("courses", courseRepo.findAll());
-        return "course-list";
+        return "course/course-list";
     }
 
     @GetMapping("/new")
     public String newCourse(Model model) {
         model.addAttribute("course", new Course());
-        return "course-new";
+        return "course/course-new";
     }
 
     @PostMapping("/save")

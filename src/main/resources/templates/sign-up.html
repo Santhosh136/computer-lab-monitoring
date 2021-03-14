@@ -6,12 +6,23 @@
     <title>Sign up</title>
 </head>
 <body>
-    <form action="/save" method="POST" th:object="${user}">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <input type="text" th:field="*{userName}">
-        <input type="text" th:field="*{password}">
-        <input type="submit" >
-        <button type="reset">Cancel</button>
-    </form>
+    <div class="container">
+        <div class="row row-cols-2">
+            <form action="/save" class="p-5" method="POST" th:object="${user}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="mb-3">
+                    <label class="form-label">Enter Username</label>
+                    <input type="text" class="form-control" th:field="*{userName}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Enter Password</label>
+                    <input type="password" class="form-control" th:field="*{password}">
+                </div>
+                <button class="btn btn-outline-dark me-2 mt-3" type="submit">Sign Up</button>
+                <button class="btn btn-outline-dark me-2 mt-3" type="reset">Cancel</button>
+            </form>
+            <img class="col p-5" src="images/profile.svg" alt="">
+        </div>
+    </div>
 </body>
 </html>
