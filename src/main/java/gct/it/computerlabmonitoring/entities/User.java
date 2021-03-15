@@ -22,6 +22,8 @@ public class User {
 
     public User() {}
 
+    //getters and setters
+
     public String getUserName() {
         return userName;
     }

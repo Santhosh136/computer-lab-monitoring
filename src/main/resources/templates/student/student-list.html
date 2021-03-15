@@ -1,7 +1,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
 <body>
-	<nav th:replace="fragments/navbar :: navbar"></nav>
+	<nav sec:authorize="!hasRole('ADMIN')" th:replace="fragments/navbar :: navbar"></nav>
+    <nav sec:authorize="hasRole('ADMIN')" th:replace="fragments/navbar :: navbarAdmin"></nav>
     <table>
         <thead>
             <td>Regno</td>

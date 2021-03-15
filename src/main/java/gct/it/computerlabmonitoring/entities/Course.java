@@ -17,6 +17,8 @@ public class Course {
     private List<Experiment> experiments;
 
     public Course() {}
+
+    //getters and setters
     
     public String getCode() {
         return code;

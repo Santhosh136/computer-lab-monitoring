@@ -22,6 +22,8 @@ public class ExpDocument {
 
     public ExpDocument() {}
 
+    //getters and setters
+
     public Integer getId() {
         return id;
     }

@@ -22,7 +22,11 @@ public class Submission {
     private ExpDocument doc;
 
     private int marks;
+
     public Submission() {}
+
+    //getters and setters
+
     public int getSubmissionId() {
         return submissionId;
     }

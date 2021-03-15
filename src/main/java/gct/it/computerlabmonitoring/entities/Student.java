@@ -29,6 +29,8 @@ public class Student {
         this.semester = "I";
     }
 
+    //getters and setters
+
     public String getRegNo() {
         return regNo;
     }

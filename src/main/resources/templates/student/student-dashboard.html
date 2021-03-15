@@ -9,7 +9,8 @@
         <span>[[${course.name}]]</span>
         <span>[[${course.semester}]]</span>
         
-        <a th:href="@{'/experiments?id=' + ${course.code}}">Click</a>
+        <a th:href="@{'/experiments?id=' + ${course.code}}">Experiments</a>
+        <a th:href="@{'/students/submissions'}">Submitted Experiments</a>
     </p>
 </body>
 </html>

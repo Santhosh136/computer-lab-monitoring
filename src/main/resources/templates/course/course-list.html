@@ -2,11 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
 <body>
-	<nav th:replace="fragments/navbar :: navbar"></nav>
+	<nav sec:authorize="!hasRole('ADMIN')" th:replace="fragments/navbar :: navbar"></nav>
+    <nav sec:authorize="hasRole('ADMIN')" th:replace="fragments/navbar :: navbarAdmin"></nav>
     <p th:each="course : ${courses}">
         <span>[[${course.code}]]</span>
         <span>[[${course.name}]]</span>
         <a th:href="@{'/experiments/new?id=' + ${course.code}}">Add exp</a>
+        <a th:href="@{'/experiments?id=' + ${course.code}}">Exp list</a>
     </p>
 </body>
 </html>

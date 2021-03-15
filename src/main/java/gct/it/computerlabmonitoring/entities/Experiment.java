@@ -26,6 +26,8 @@ public class Experiment {
 
     public Experiment() {}
 
+    //getters and setters
+    
     public Integer getId() {
         return id;
     }

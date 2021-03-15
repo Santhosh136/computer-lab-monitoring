@@ -170,7 +170,7 @@ public class SubmissionController {
         submissionRepo.save(submission);
 
         // redirecting to home
-        return "redirect:/submissions";
+        return "redirect:/students/submissions";
     }
     
 }

@@ -1,8 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
 <body>
-	<nav sec:authorize="!hasRole('ADMIN')" th:replace="fragments/navbar :: navbar"></nav>
-    <nav sec:authorize="hasRole('ADMIN')" th:replace="fragments/navbar :: navbarAdmin"></nav>
+	<nav th:replace="fragments/navbar :: navbar"></nav>
     <p th:each="doc : ${docs}">
         <a th:href="@{'/submissions/download?id=' + ${doc.id}}" target="_tab">[[${doc.fileName}]]</a>
         <span>([[${doc.size}]] bytes)</span>

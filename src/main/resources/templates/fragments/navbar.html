@@ -16,5 +16,23 @@
         </div>
 	    </div>
 	</nav>
+
+    <nav th:fragment="navbarAdmin" class="navbar navbar-light bg-light">
+		<div class="container-fluid">
+		<a class="navbar-brand" href="/">
+			<img src="images/logo.png" alt="logo" height="50" class="d-inline-block align-top">
+		</a>
+        <div class="d-flex justify-content-end" sec:authorize="!isAuthenticated()">
+            <a class="btn btn-outline-dark m-2" href="/signup">Sign Up</a>
+            <a class="btn btn-outline-dark m-2" href="/login">Log In</a>
+        </div>
+        <div class="d-flex justify-content-end" sec:authorize="isAuthenticated()">
+            <a class="btn btn-outline-dark m-2" href="/submissions">Submissions</a>
+            <a class="btn btn-outline-dark m-2" href="/courses/new">Add Course</a>
+            <a class="btn btn-outline-dark m-2" href="/courses">Experiments</a>
+            <a class="btn btn-outline-dark m-2" href="/logout">Logout</a>
+        </div>
+	    </div>
+	</nav>
 </body>
 </html>
