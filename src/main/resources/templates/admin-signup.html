@@ -1,10 +1,5 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Sign up</title>
-</head>
+<head th:replace="fragments/header :: header"></head>
 <body>
     <div class="container">
         <div class="row row-cols-2">
@@ -18,8 +13,8 @@
                     <label class="form-label">Enter Password</label>
                     <input type="password" class="form-control" th:field="*{password}">
                 </div>
-                <button class="btn btn-outline-dark me-2 mt-3" type="submit">Sign Up</button>
-                <button class="btn btn-outline-dark me-2 mt-3" type="reset">Cancel</button>
+                <button class="btn btn-outline-success me-2 mt-3" type="submit">Sign Up</button>
+                <button class="btn btn-outline-danger me-2 mt-3" type="reset">Cancel</button>
             </form>
             <img class="col p-5" src="/images/profile.svg" alt="">
         </div>
