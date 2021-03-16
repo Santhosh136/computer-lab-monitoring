@@ -19,6 +19,7 @@ public class ExpDocument {
     
     @OneToOne(mappedBy = "doc")
     private Submission submission;
+    private int marks;
 
     public ExpDocument() {}
 
@@ -55,6 +56,14 @@ public class ExpDocument {
     public void setContent(byte[] bs) {
         this.content = bs;
     }  
+
+    public int getMarks() {
+        return marks;
+    }
+
+    public void setMarks(int marks) {
+        this.marks = marks;
+    }
     
     public Submission getSubmission() {
         return submission;

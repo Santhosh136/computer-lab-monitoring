@@ -4,13 +4,26 @@
 <body>
 	<nav th:replace="fragments/navbar :: navbar"></nav>
     
-    <p th:each="course : ${courses}">
-        <span>[[${course.code}]]</span>
-        <span>[[${course.name}]]</span>
-        <span>[[${course.semester}]]</span>
-        
-        <a th:href="@{'/experiments?id=' + ${course.code}}">Experiments</a>
-        <a th:href="@{'/students/submissions'}">Submitted Experiments</a>
-    </p>
+    <div class="container">
+    <table class="table table-striped table-hover table-bordered mt-5">
+    <thead>
+        <th>Course Code</th>
+        <th>Course Name</th>
+        <th>Course Semester</th>
+        <th>Experiments</th>
+        <th>Submitted Experiments</th>
+    </thead>
+    <tbody>
+        <tr th:each="course : ${courses}">
+            <td>[[${course.code}]]</td>
+            <td>[[${course.name}]]</td>
+            <td>[[${course.semester}]]</td>
+            
+            <td><a th:href="@{'/experiments?id=' + ${course.code}}">Experiments</a></td>
+            <td><a th:href="@{'/students/submissions'}">Submitted Experiments</a></td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
 </body>
 </html>

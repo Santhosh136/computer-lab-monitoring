@@ -2,8 +2,9 @@
 <head th:replace="fragments/header :: header"></head>
 <body>
     <div class="container">
+        <h3 class="pt-5">Welcome Admin! sign up here...</h3>
         <div class="row row-cols-2">
-            <form action="/admin/save" class="p-5" method="POST" th:object="${user}">
+            <form action="/admin/save" method="POST" th:object="${user}" class="col p-5">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <div class="mb-3">
                     <label class="form-label">Enter Username</label>

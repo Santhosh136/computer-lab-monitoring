@@ -4,11 +4,23 @@
 <body>
 	<nav sec:authorize="!hasRole('ADMIN')" th:replace="fragments/navbar :: navbar"></nav>
     <nav sec:authorize="hasRole('ADMIN')" th:replace="fragments/navbar :: navbarAdmin"></nav>
-    <p th:each="course : ${courses}">
-        <span>[[${course.code}]]</span>
-        <span>[[${course.name}]]</span>
-        <a th:href="@{'/experiments/new?id=' + ${course.code}}">Add exp</a>
-        <a th:href="@{'/experiments?id=' + ${course.code}}">Exp list</a>
-    </p>
+    <div class="container">
+    <table class="table table-striped table-hover table-bordered mt-5">
+        <thead>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>New Exp</th>
+            <th>List Exp</th>
+        </thead>
+        <tbody>
+            <tr th:each="course : ${courses}">
+                <td>[[${course.code}]]</td>
+                <td>[[${course.name}]]</td>
+                <td><a th:href="@{'/experiments/new?id=' + ${course.code}}">Add exp</a></td>
+                <td><a th:href="@{'/experiments?id=' + ${course.code}}">Exp list</a></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </body>
 </html>

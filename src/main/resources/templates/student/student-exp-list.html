@@ -2,9 +2,22 @@
 <head th:replace="fragments/header :: header"></head>
 <body>
 	<nav th:replace="fragments/navbar :: navbar"></nav>
-    <p th:each="doc : ${docs}">
-        <a th:href="@{'/submissions/download?id=' + ${doc.id}}" target="_tab">[[${doc.fileName}]]</a>
-        <span>([[${doc.size}]] bytes)</span>
-    </p>
+    
+    <div class="container ">
+        <table class="table table-striped table-hover table-bordered mt-5">
+            <thead>
+                <th>File Name</th>
+                <th>Size in bytes</th>
+                <th>Download link</th>
+            </thead>
+            <tbody>
+                <tr th:each="doc : ${docs}">
+                    <td>[[${doc.fileName}]]</td>
+                    <td>[[${doc.size}]] bytes</td>
+                    <td><a th:href="@{'/submissions/download?id=' + ${doc.id}}" target="_tab">[[${doc.fileName}]]</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

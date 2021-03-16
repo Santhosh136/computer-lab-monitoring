@@ -10,8 +10,5 @@ insert into student(reg_no, name, semester) values
 insert into user(user_name, password, roles, active, student_reg_no) values
 ('136', 'san', 'ROLE_USER', 1, '136'),
 ('103', 'adhi', 'ROLE_USER', 1, '103'),
-('122', 'mohan', 'ROLE_USER', 1, '122');
-
-insert into experiment(id, title, exp_no, description, course_code) values
-(1, 'prime number', '1','prime or not', '16IPC105'),
-(2, 'star pattern', '2','print start patter', '16IPC105');
+('122', 'mohan', 'ROLE_USER', 1, '122'),
+('admin', 'ad', 'ROLE_ADMIN', 1, null);

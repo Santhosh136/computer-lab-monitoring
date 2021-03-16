@@ -50,6 +50,9 @@ submission
 | student_reg_no | varchar(255) | YES  | MUL | NULL    |       |
 +----------------+--------------+------+-----+---------+-------+
 
+10.1.24.251
+root
+itadmin@123
 user
 +----------------+--------------+------+-----+---------+-------+
 | Field          | Type         | Null | Key | Default | Extra |

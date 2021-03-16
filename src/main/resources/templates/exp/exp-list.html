@@ -4,12 +4,23 @@
 <body>
 	<nav sec:authorize="!hasRole('ADMIN')" th:replace="fragments/navbar :: navbar"></nav>
     <nav sec:authorize="hasRole('ADMIN')" th:replace="fragments/navbar :: navbarAdmin"></nav>
-    <p th:each="exp : ${exps}">
-        <span>[[${exp.expNo}]]</span>
-        <span>[[${exp.title}]]</span>
-        <span>[[${exp.description}]]</span>
-        <!-- <span>[[${exp.course}]]</span> -->
-        <a th:href="@{'/submissions/new?id=' + ${exp.id}}">Click</a>
-    </p>
+    <div class="container ">
+        <table class="table table-striped table-hover table-bordered mt-5">
+            <thead>
+                <th>Exp No</th>
+                <th>Exp Title</th>
+                <th>Exp description</th>
+                <th sec:authorize="!hasRole('ADMIN')">Exp link</th>
+            </thead>
+            <tbody>
+                <tr th:each="exp : ${exps}">
+                    <td>[[${exp.expNo}]]</td>
+                    <td>[[${exp.title}]]</td>
+                    <td>[[${exp.description}]]</td>
+                    <td sec:authorize="!hasRole('ADMIN')"><a th:href="@{'/submissions/new?id=' + ${exp.id}}">Do exp</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

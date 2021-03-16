@@ -17,5 +17,23 @@
             </tr>
         </tbody>
     </table>
+    <div class="container ">
+        <table class="table table-striped table-hover table-bordered mt-5">
+            <thead>
+                <th>Student Regno</th>
+                <th>Student Name</th>
+                <th>Email Id</th>
+                <th>Semester</th>
+            </thead>
+            <tbody>
+                <tr th:each="student: ${students}">
+                    <td>[[${student.regNo}]]</td>
+                    <td>[[${student.name}]]</td>
+                    <td>[[${student.emailId}]]</td>
+                    <td>[[${student.semester}]]</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

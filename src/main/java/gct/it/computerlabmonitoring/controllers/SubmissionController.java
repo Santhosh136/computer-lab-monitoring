@@ -55,6 +55,13 @@ public class SubmissionController {
         return "submission/submission-list";
     }
 
+    @PostMapping("/updateMark") 
+    public String updateMark(@RequestParam("id") Integer id,
+    @RequestParam("marks") Integer marks) {
+        docRepo.updateMark(marks, id);
+        return "redirect:/submissions";
+    }
+
     @GetMapping("/new")
     public String newSubmission(@Param("id") Integer id, Principal principal, Model model) {
         Submission submission = new Submission();
@@ -95,6 +102,7 @@ public class SubmissionController {
     public String saveExp(
         @RequestParam("code") String code, 
         @RequestParam("op") String output,
+        @RequestParam("ip") String input,
         @RequestParam("language") String language, 
         @RequestParam("subId") Integer subId,
         @RequestParam("expId") Integer expId) throws Exception {
@@ -148,6 +156,12 @@ public class SubmissionController {
         doc.add( Chunk.NEWLINE);
         doc.add( Chunk.NEWLINE);
 
+        doc.add(new Paragraph("Input", FontFactory.getFont(FontFactory.COURIER_BOLD, 15)));
+        doc.add(new Paragraph(input, codeFont));
+
+        doc.add( Chunk.NEWLINE);
+        doc.add( Chunk.NEWLINE);
+
         doc.add(new Paragraph("Ouput", FontFactory.getFont(FontFactory.COURIER_BOLD, 15)));
         doc.add(new Paragraph(output, codeFont));
 
@@ -171,6 +185,7 @@ public class SubmissionController {
 
         // redirecting to home
         return "redirect:/students/submissions";
+        
     }
     
 }
