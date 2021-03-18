@@ -14,7 +14,7 @@
                 <tr th:each="doc : ${docs}">
                     <td>[[${doc.fileName}]]</td>
                     <td>[[${doc.size}]] bytes</td>
-                    <td><a th:href="@{'/submissions/download?id=' + ${doc.id}}" target="_tab">[[${doc.fileName}]]</a></td>
+                    <td><a th:href="@{'/submissions/download?id=' + ${doc.id}}" target="_blank" >[[${doc.fileName}]]</a></td>
                 </tr>
             </tbody>
         </table>

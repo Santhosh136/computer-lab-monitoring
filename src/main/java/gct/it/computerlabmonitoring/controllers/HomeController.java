@@ -45,7 +45,7 @@ public class HomeController {
         user.setStudent(student);
         
         userRepo.save(user);
-        return "redirect:/signup";
+        return "redirect:/";
     }
 
     @GetMapping("/profile") 
